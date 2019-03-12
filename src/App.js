@@ -16,11 +16,13 @@ class App extends Component {
               id
               name
               active
+              classification
             }
           }
         `}
         variables={{}}
         render={({ errors, props }) => {
+          console.log(props);
           if (props) {
             return (
               <div className="App">
@@ -36,6 +38,8 @@ class App extends Component {
                     count={5}
                   />
                   <h1 className="App-title">{props.pokemon.name}</h1>
+
+                  <h1 className="App-title">{props.pokemon.active}</h1>
                 </header>
                 <p className="App-intro">
                   Contrived relay example, the active status is not saved, only

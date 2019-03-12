@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8cda3657d0cff17ba3a98cf33302fde2
+ * @relayHash 5b290b346277b0cc06e0c4542598826a
  */
 
 /* eslint-disable */
@@ -15,6 +15,7 @@ export type AppQueryResponse = {|
     +id: string,
     +name: ?string,
     +active: ?boolean,
+    +classification: ?string,
   |},
 |};
 */
@@ -24,6 +25,7 @@ query AppQuery {
   pokemon(name: "Pikachu") {
     id
     name
+    classification
   }
 }
 */
@@ -50,6 +52,13 @@ const node /*: ConcreteRequest*/ = (function() {
       name: "name",
       args: null,
       storageKey: null
+    },
+    v3 = {
+      kind: "ScalarField",
+      alias: null,
+      name: "classification",
+      args: null,
+      storageKey: null
     };
   return {
     kind: "Request",
@@ -57,7 +66,7 @@ const node /*: ConcreteRequest*/ = (function() {
     name: "AppQuery",
     id: null,
     text:
-      'query AppQuery {\n  pokemon(name: "Pikachu") {\n    id\n    name\n  }\n}\n',
+      'query AppQuery {\n  pokemon(name: "Pikachu") {\n    id\n    name\n    classification\n  }\n}\n',
     metadata: {},
     fragment: {
       kind: "Fragment",
@@ -83,7 +92,8 @@ const node /*: ConcreteRequest*/ = (function() {
               name: "active",
               args: null,
               storageKey: null
-            }
+            },
+            v3
           ]
         }
       ]
@@ -101,11 +111,11 @@ const node /*: ConcreteRequest*/ = (function() {
           args: v0,
           concreteType: "Pokemon",
           plural: false,
-          selections: [v1, v2]
+          selections: [v1, v2, v3]
         }
       ]
     }
   };
 })();
-node /*: any*/.hash = "c62af48a74342b4414afebe1673758ef";
+node /*: any*/.hash = "b7638f49df28bf699bcb880e9ba6ebb7";
 module.exports = node;
