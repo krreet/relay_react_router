@@ -4,6 +4,7 @@ import Toggle from "react-toggle";
 import environment from "./createRelayEnvironment";
 import "react-toggle/style.css";
 import "./App.css";
+import Child from "./Child";
 
 class App extends Component {
   render() {
@@ -28,11 +29,17 @@ class App extends Component {
               <div className="App">
                 <header className="App-header">
                   <Toggle
-                    checked={props.pokemon.active || false}
+                    checked={props.pokemon.active === "activated" || false}
                     onChange={() => {
                       commitLocalUpdate(environment, store => {
                         const record = store.get(props.pokemon.id);
-                        record.setValue(!props.pokemon.active, "active");
+                        const active = record.getValue("active");
+
+                        console.log(active);
+
+                        active === "activated"
+                          ? record.setValue("unactivated", "active")
+                          : record.setValue("activated", "active");
                       });
                     }}
                     count={5}
@@ -45,6 +52,8 @@ class App extends Component {
                   Contrived relay example, the active status is not saved, only
                   toggled in the relay store.
                 </p>
+
+                <Child pokemon={props.pokemon} />
               </div>
             );
           }

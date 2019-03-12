@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 5b290b346277b0cc06e0c4542598826a
+ * @relayHash 0d7754f521e3c175e659b030420531f1
  */
 
 /* eslint-disable */
@@ -14,7 +14,7 @@ export type AppQueryResponse = {|
   +pokemon: ?{|
     +id: string,
     +name: ?string,
-    +active: ?boolean,
+    +active: ?string,
     +classification: ?string,
   |},
 |};
