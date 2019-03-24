@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 0d7754f521e3c175e659b030420531f1
+ * @relayHash fdfb1dc6fa516c4abef8928272e8834e
  */
 
 /* eslint-disable */
@@ -9,13 +9,12 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
+type Child2_pokemon$ref = any;
+type Child_pokemon$ref = any;
 export type AppQueryVariables = {| |};
 export type AppQueryResponse = {|
   +pokemon: ?{|
-    +id: string,
-    +name: ?string,
-    +active: ?string,
-    +classification: ?string,
+    +$fragmentRefs: (Child_pokemon$ref & Child2_pokemon$ref),
   |},
 |};
 */
@@ -23,9 +22,28 @@ export type AppQueryResponse = {|
 /*
 query AppQuery {
   pokemon(name: "Pikachu") {
+    ...Child_pokemon
+    ...Child2_pokemon
     id
-    name
-    classification
+  }
+}
+
+fragment Child_pokemon on Pokemon {
+  id
+  name
+  classification
+}
+
+fragment Child2_pokemon on Pokemon {
+  id
+  image
+  height {
+    minimum
+    maximum
+  }
+  weight {
+    minimum
+    maximum
   }
 }
 */
@@ -39,34 +57,29 @@ const node /*: ConcreteRequest*/ = (function() {
         type: "String"
       }
     ],
-    v1 = {
-      kind: "ScalarField",
-      alias: null,
-      name: "id",
-      args: null,
-      storageKey: null
-    },
-    v2 = {
-      kind: "ScalarField",
-      alias: null,
-      name: "name",
-      args: null,
-      storageKey: null
-    },
-    v3 = {
-      kind: "ScalarField",
-      alias: null,
-      name: "classification",
-      args: null,
-      storageKey: null
-    };
+    v1 = [
+      {
+        kind: "ScalarField",
+        alias: null,
+        name: "minimum",
+        args: null,
+        storageKey: null
+      },
+      {
+        kind: "ScalarField",
+        alias: null,
+        name: "maximum",
+        args: null,
+        storageKey: null
+      }
+    ];
   return {
     kind: "Request",
     operationKind: "query",
     name: "AppQuery",
     id: null,
     text:
-      'query AppQuery {\n  pokemon(name: "Pikachu") {\n    id\n    name\n    classification\n  }\n}\n',
+      'query AppQuery {\n  pokemon(name: "Pikachu") {\n    ...Child_pokemon\n    ...Child2_pokemon\n    id\n  }\n}\n\nfragment Child_pokemon on Pokemon {\n  id\n  name\n  classification\n}\n\nfragment Child2_pokemon on Pokemon {\n  id\n  image\n  height {\n    minimum\n    maximum\n  }\n  weight {\n    minimum\n    maximum\n  }\n}\n',
     metadata: {},
     fragment: {
       kind: "Fragment",
@@ -84,16 +97,16 @@ const node /*: ConcreteRequest*/ = (function() {
           concreteType: "Pokemon",
           plural: false,
           selections: [
-            v1,
-            v2,
             {
-              kind: "ScalarField",
-              alias: null,
-              name: "active",
-              args: null,
-              storageKey: null
+              kind: "FragmentSpread",
+              name: "Child_pokemon",
+              args: null
             },
-            v3
+            {
+              kind: "FragmentSpread",
+              name: "Child2_pokemon",
+              args: null
+            }
           ]
         }
       ]
@@ -111,11 +124,60 @@ const node /*: ConcreteRequest*/ = (function() {
           args: v0,
           concreteType: "Pokemon",
           plural: false,
-          selections: [v1, v2, v3]
+          selections: [
+            {
+              kind: "ScalarField",
+              alias: null,
+              name: "id",
+              args: null,
+              storageKey: null
+            },
+            {
+              kind: "ScalarField",
+              alias: null,
+              name: "name",
+              args: null,
+              storageKey: null
+            },
+            {
+              kind: "ScalarField",
+              alias: null,
+              name: "classification",
+              args: null,
+              storageKey: null
+            },
+            {
+              kind: "ScalarField",
+              alias: null,
+              name: "image",
+              args: null,
+              storageKey: null
+            },
+            {
+              kind: "LinkedField",
+              alias: null,
+              name: "height",
+              storageKey: null,
+              args: null,
+              concreteType: "PokemonDimension",
+              plural: false,
+              selections: v1
+            },
+            {
+              kind: "LinkedField",
+              alias: null,
+              name: "weight",
+              storageKey: null,
+              args: null,
+              concreteType: "PokemonDimension",
+              plural: false,
+              selections: v1
+            }
+          ]
         }
       ]
     }
   };
 })();
-node /*: any*/.hash = "b7638f49df28bf699bcb880e9ba6ebb7";
+node /*: any*/.hash = "c52f244004d4abd3eabc7674702a61b1";
 module.exports = node;

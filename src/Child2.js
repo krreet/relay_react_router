@@ -4,19 +4,17 @@ import Toggle from "react-toggle";
 import environment from "./createRelayEnvironment";
 import "react-toggle/style.css";
 import "./App.css";
-import Child2 from "./Child2";
 
-import { BrowserRouter, Route } from "react-router-dom";
 import { createFragmentContainer } from "react-relay";
-// import type { Child_pokemon } from "./__generated__/Child_pokemon.graphql";
+// import type { Child2_pokemon } from "./__generated__/Child_pokemon.graphql";
 // type Props = {
 //   pokemon: Child_pokemon
 // };
-class Child extends Component {
+class Child2 extends Component {
   render() {
     const { props } = this;
     if (this.props) {
-      console.log("props form child", this.props);
+      console.log("props form Child2", this.props);
       return (
         <div className="App">
           <header className="App-header">
@@ -41,13 +39,9 @@ class Child extends Component {
             <h1 className="App-title">{props.pokemon.active}</h1>
           </header>
           <p className="App-intro">
-            Contrived relay CHILD example, the active status is not saved, only
+            Contrived relay Child2 example, the active status is not saved, only
             toggled in the relay store.
           </p>
-          <Route
-            path="/child/child2"
-            render={() => <Child2 pokemon={this.props.sprops.pokemon} />}
-          />
         </div>
       );
     }
@@ -56,15 +50,22 @@ class Child extends Component {
 }
 
 export default createFragmentContainer(
-  Child,
+  Child2,
 
   graphql`
     # As a convention, we name the fragment as '<ComponentFileName>_<propName>'
-    fragment Child_pokemon on Pokemon {
+    fragment Child2_pokemon on Pokemon {
       id
-      name
+      image
+      height {
+        minimum
+        maximum
+      }
+      weight {
+        minimum
+        maximum
+      }
       active
-      classification
     }
   `
 );

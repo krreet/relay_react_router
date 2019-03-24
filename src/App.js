@@ -6,6 +6,8 @@ import "react-toggle/style.css";
 import "./App.css";
 import Child from "./Child";
 
+import { BrowserRouter, Route } from "react-router-dom";
+
 class App extends Component {
   render() {
     return (
@@ -14,10 +16,8 @@ class App extends Component {
         query={graphql`
           query AppQuery {
             pokemon(name: "Pikachu") {
-              id
-              name
-              active
-              classification
+              ...Child_pokemon
+              ...Child2_pokemon
             }
           }
         `}
@@ -26,8 +26,9 @@ class App extends Component {
           console.log(props);
           if (props) {
             return (
-              <div className="App">
-                <header className="App-header">
+              <BrowserRouter>
+                <div className="App">
+                  {/* <header className="App-header">
                   <Toggle
                     checked={props.pokemon.active === "activated" || false}
                     onChange={() => {
@@ -47,14 +48,17 @@ class App extends Component {
                   <h1 className="App-title">{props.pokemon.name}</h1>
 
                   <h1 className="App-title">{props.pokemon.active}</h1>
-                </header>
-                <p className="App-intro">
-                  Contrived relay example, the active status is not saved, only
-                  toggled in the relay store.
-                </p>
+                </header> */}
+                  <p className="App-intro">
+                    Contrived relay example, the active status is not saved,
+                    only toggled in the relay store.
+                  </p>
 
-                <Child pokemon={props.pokemon} />
-              </div>
+                  {/* <Route path='/child' render={() => <Child sprops={props}  pokemon={props.pokemon} />}/> */}
+
+                  <Child pokemon={props.pokemon} sprops={props} />
+                </div>
+              </BrowserRouter>
             );
           }
           return <div>Loading...</div>;
